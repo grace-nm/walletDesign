@@ -5,6 +5,9 @@ import Home from "../screens/Home";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { colors } from "../components/colors";
+import Greeting from "../components/Header/Greeting";
+import Profile from "../components/Header/Profile";
+import avi from '../assets/avi/avatar.png'
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -27,6 +30,19 @@ const RootStack: FunctionComponent = () => {
             height: 120,
           },
           headerTintColor: colors.secondary,
+          headerRightContainerStyle:{
+              paddingRight: 25,
+          },
+          headerLeftContainerStyle: {
+              paddingLeft: 10,
+          },
+          headerRight: () => (
+              <Profile
+              img={avi}
+              imgContainerStyle={{
+                  backgroundColor: colors.tertiary
+              }}/>
+          ),
         }}
         initialRouteName="Home"
       >
@@ -35,7 +51,20 @@ const RootStack: FunctionComponent = () => {
           component={Welcome}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen 
+        name="Home" 
+        component={Home}
+        options={{
+            headerTitle: (props) => (
+            <Greeting
+            mainText="Hey Coby!"
+            subText="Welcome Back"
+            {...props}
+            />
+            ),
+            headerLeft: () => <></>,
+        }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
